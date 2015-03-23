@@ -19,3 +19,7 @@ grunt serve
 ```
 
 Then navigate to [http://localhost:8000]()
+
+## Screenshot
+
+![screenshot](https://cloud.githubusercontent.com/assets/4974818/6792540/70c729f0-d1b9-11e4-89ad-7f85252baa23.png)
