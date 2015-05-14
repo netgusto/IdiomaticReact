@@ -5,20 +5,18 @@ import UIPageHeader from '../UI/PageHeader';
 import TodoList from '../Todo/TodoList';
 import TodoForm from '../Todo/TodoForm';
 
-let InterfaceRest = React.createClass({
-    render() {
+export default class InterfaceRest extends React.Component {
 
-        const handleAdd = (title) => { this.props.flux.getActions('todos').createTodo(title); };
+    render() {
 
         return (
             <div>
                 <UIPageHeader icon="star" text='Todos' />
-
-                <TodoList {...this.props} />
-                <TodoForm {...this.props} onAdd={handleAdd} />
+                <TodoList />
+                <TodoForm />
             </div>
         );
     }
-});
+}
 
 module.exports = InterfaceRest;

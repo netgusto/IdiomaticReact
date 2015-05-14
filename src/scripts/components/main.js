@@ -1,45 +1,48 @@
 'use strict';
 
 import React from 'react';
-import Router from 'react-router';
-import Immutable from 'immutable';
+import Router, { Route, DefaultRoute } from 'react-router';
+import { ContextFactory } from 'geiger';
 
-import { AppFlux } from '../flux/AppFlux';
+import TodoActions from '../actions/TodoActions';
+import TodoStore from '../stores/TodoStore';
 
 import App from './App';
 import InterfaceHome from './Interfaces/Home';
-import InterfaceRest from './Interfaces/Rest';
+import InterfaceTodos from './Interfaces/Todos';
 
-try {
 
-    require('../../styles/main.sass');
+require('../../styles/main.sass');
 
-    const config = JSON.parse(window.unescape(document.getElementsByName('config/app')[0].content));
-    const flux = new AppFlux(config);
+// Declaring our App Context
+const Context = ContextFactory({
+    user: React.PropTypes.object.isRequired,
+    todostore: React.PropTypes.object.isRequired,
+    todoactions: React.PropTypes.object.isRequired
+});
 
-    const Route = Router.Route,
-        DefaultRoute = Router.DefaultRoute;
+// Fetching app config variables from the HTML page
+const config = JSON.parse(window.unescape(document.getElementsByName('config/app')[0].content));
 
-    var Interfaces = (
-      <Route name="home" path="/" handler={App}>
+// Building Actions and Stores
+const todoactions = new TodoActions({ apiendpoint: config.apiendpoint });
+const todostore = new TodoStore({ actions: todoactions });
+
+const Interfaces = (
+    <Route name="home" path="/" handler={App}>
         <DefaultRoute handler={InterfaceHome} />
-        <Route name="rest" path="/rest" handler={InterfaceRest} />
-      </Route>
-    );
+        <Route name="rest" path="/rest" handler={InterfaceTodos} />
+    </Route>
+);
 
-    Router.run(Interfaces, function (Handler) {
-        React.render(<Handler flux={flux} />, document.getElementById('app'));
-    });
-} catch(e) {
-    React.render(
-        <div>
-            <h2>Error: application could not load</h2>
-            <pre>
-                <strong>{e.toString()}</strong>
-                {!!e.stack && (<div><br />{e.stack}</div>)}
-            </pre>
-        </div>, document.body
-    );
-
-    throw e;
-}
+Router.run(
+    Interfaces,
+    RouteHandler => React.render((
+        <Context user={config.user} todostore={todostore} todoactions={todoactions}>
+        {/* Setting depencies in the context */}
+            <RouteHandler />
+            {/* Displaying the interface passed by the router */}
+        </Context>),
+        document.getElementById('app')
+    )
+);

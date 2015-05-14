@@ -1,28 +1,24 @@
 'use strict';
 
 import React from 'react/addons';
-import Router from 'react-router';
-import FluxComponent from 'flummox/component';
+import { RouteHandler } from 'react-router';
 
 import UINavbar from './UI/Navbar';
 
-const RouteHandler = Router.RouteHandler;
+export default class App extends React.Component {
 
-let App = React.createClass({
+    static contextTypes = {
+        todoactions: React.PropTypes.object.isRequired
+    };
 
-    componentDidMount() { this.props.flux.getActions('todos').fetchTodos(); },
+    componentDidMount() { this.context.todoactions.fetchTodos(); }
 
     render() {
-
         return (
             <div className='main container'>
-                <FluxComponent {...this.props} connectToStores={['todos']}>
-                    <UINavbar />
-                    <RouteHandler />
-                </FluxComponent>
+                <UINavbar />
+                <RouteHandler />
             </div>
         );
     }
-});
-
-module.exports = App;
+}

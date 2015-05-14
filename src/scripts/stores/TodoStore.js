@@ -1,45 +1,37 @@
 'use strict';
 
-import { Store } from 'flummox';
+import { Watchable } from 'geiger';
 import Immutable from 'immutable';
 
-export class TodoStore extends Store {
+export default class TodoStore extends Watchable {
 
-    constructor(flux) {
+    constructor({ actions }) {
+
         super();
-
-        this.state = { todos: Immutable.Map() };
-
-        class TodoRecord extends Immutable.Record({id: null, title: null}) {
-            label() { return this.get('title'); }
-        }
+        this.todos = Immutable.OrderedMap();
 
         /*
-        Registering action handlers
+        * Registering action handlers
+        * Intentionnaly made private (just use the actions !)
         */
 
-        const todoActionIds = flux.getActionIds('todos');
-
-        this.register(todoActionIds.createTodo, (data) => {
-            const newMap = this.state.todos.set(data.id, new TodoRecord(data));
-            this.setState({ todos: newMap });
+        actions.on('createTodo', todo => {
+            this.todos = this.todos.set(todo.get('id'), todo);
+            this.changed();
         });
 
-        this.register(todoActionIds.fetchTodos, (todos) => {
-
-            let todosMap = Immutable.Map();
+        actions.on('fetchTodos', todos => {
             for(let todo of todos) {
-                todosMap = todosMap.set(todo.id, new TodoRecord(todo));
+                this.todos = this.todos.set(todo.get('id'), todo);
             }
-
-            this.setState({ todos: this.state.todos.merge(todosMap) });
+            this.changed();
         });
 
-        this.register(todoActionIds.deleteTodo, (todo) => {
-            let todos = this.state.todos.delete(todo.get('id'));
-            if(todos !== this.state.todos) { this.setState({ todos: todos }); }
+        actions.on('deleteTodo', todo => {
+            this.todos = this.todos.delete(todo.get('id'));
+            this.changed();
         });
     }
 
-    getTodos() { return this.state.todos; }
+    getTodos() { return this.todos.toArray(); }
 }

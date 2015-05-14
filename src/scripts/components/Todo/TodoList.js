@@ -2,28 +2,34 @@
 
 import React from 'react/addons';
 
-let TodoList = React.createClass({
+export default class TodoList extends React.Component {
 
-    componentWillMount() { this.props.flux.getStore('todos').addListener('change', this.onTodoStoreChange); },
+    static contextTypes = {
+        todostore: React.PropTypes.object.isRequired,
+        todoactions: React.PropTypes.object.isRequired
+    };
 
-    componentWillUnmount() { this.props.flux.getStore('todos').removeListener('change', this.onTodoStoreChange); },
+    componentWillMount() {
+        this.unwatchTodostore = this.context.todostore.watch(this.forceUpdate.bind(this));
+    }
 
-    onTodoStoreChange() { this.setState({ todos: this.props.flux.getStore('todos').getTodos() }); },
+    componentWillUnmount() { this.unwatchTodostore(); }
 
     render() {
 
-        const onDelete = (todo) => this.props.flux.getActions('todos').deleteTodo(todo);
+        const { todoactions, todostore } = this.context;
+        const onDelete = (todo) => todoactions.deleteTodo(todo);
+
+        const todos = todostore.getTodos();
 
         return (
             <div>
-                {!this.props.todos && (<h4>Nothing in the list ! Try adding some elements using the form below.</h4>)}
-                {this.props.todos && this.props.todos.map((todo) =>
+                {todos.length === 0 && (<h4>Nothing in the list ! Try adding some elements using the form below.</h4>)}
+                {todos.map((todo) =>
                     <p><button className="btn btn-default btn-sm" onClick={onDelete.bind(this, todo)}>Done</button> {todo.label()}</p>
-                ).toJS()}
+                )}
             </div>
         );
     }
 
-});
-
-module.exports = TodoList;
+}

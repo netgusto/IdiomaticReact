@@ -1,15 +1,18 @@
 'use strict';
 
 import React from 'react/addons';
-import {Link, State} from 'react-router';
+import { Link } from 'react-router';
+import cx from 'classnames';
 
-const cx = React.addons.classSet;
+export default class UINavbar extends React.Component {
 
-let UINavbar = React.createClass({
-    mixins: [State],
+    static contextTypes = {
+        router: React.PropTypes.func.isRequired
+    };
+
     render() {
 
-        const user = this.props.flux.getUser();
+        const { router } = this.context;
 
         return (
             <div className="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -19,7 +22,7 @@ let UINavbar = React.createClass({
                     </div>
 
                     <ul className="nav navbar-nav">
-                        <li className={cx({active: this.isActive('rest')})}><Link to="rest">Rest Todos</Link></li>
+                        <li className={cx({active: router.isActive('rest')})}><Link to="rest">Rest Todos</Link></li>
                     </ul>
 
                     <ul className="nav navbar-nav pull-right">
@@ -29,6 +32,4 @@ let UINavbar = React.createClass({
             </div>
         );
     }
-});
-
-module.exports = UINavbar;
+}

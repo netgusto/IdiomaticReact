@@ -2,7 +2,13 @@
 
 import React from 'react/addons';
 
-let UIPageHeader = React.createClass({
+export default class UIPageHeader extends React.Component {
+
+    static propTypes = {
+        icon: React.PropTypes.string.isRequired,
+        text: React.PropTypes.string.isRequired
+    };
+
     render() {
         return (
             <div>
@@ -11,6 +17,4 @@ let UIPageHeader = React.createClass({
             </div>
         );
     }
-});
-
-module.exports = UIPageHeader;
+}

@@ -1,37 +1,44 @@
 'use strict';
 
-import { Actions } from 'flummox';
+import { Watchable } from 'geiger';
 import axios from 'axios';
-import uuid from '../utils/uuid'
 
-let serverFetchTodos = async function(apiendpoint) {
+import { TodoRecord } from '../records';
+import uuid from '../utils/uuid';
+
+const serverFetchTodos = async (apiendpoint) => {
     let todos = await axios.get(apiendpoint + '/todos');
-    return todos.data.slice(0, 7);  // passed to the store after REST response (obviously); sliced for the demo
+    return todos.data.slice(0, 7).map(o => new TodoRecord(o));  // passed to the store after REST response (obviously); sliced for the demo
 };
 
-let serverCreateTodo = function(apiendpoint, todoContent) {
-
-    const newTodo = { id: uuid(), title: todoContent };
+const serverCreateTodo = (apiendpoint, newTodo) => {
     axios.post(apiendpoint + '/todos', newTodo);
-
-    return newTodo; // passed to the store without awaiting REST response for optimistic add
 };
 
-let serverDeleteTodo = function(apiendpoint, todo) {
+const serverDeleteTodo = (apiendpoint, todo) => {
     axios.delete(apiendpoint + '/todos/' + todo.get('id'));
-    return todo; // passed to the store without awaiting REST response for optimistic delete
 };
 
-export class TodoActions extends Actions {
+export default class TodoActions extends Watchable {
 
-    constructor(apiendpoint) {
+    constructor({ apiendpoint }) {
         super();
         this.apiendpoint = apiendpoint;
     }
 
-    async fetchTodos() { return await serverFetchTodos(this.apiendpoint); }
+    async fetchTodos() {
+        const todos = await serverFetchTodos(this.apiendpoint);
+        this.emit('fetchTodos', todos);
+    }
 
-    createTodo(todoContent) { return serverCreateTodo(this.apiendpoint, todoContent); }
+    createTodo(title) {
+        const todo = new TodoRecord({ id: uuid(), title });
+        serverCreateTodo(this.apiendpoint, todo);
+        this.emit('createTodo', todo);  // passed to the store without awaiting REST response for optimistic add
+    }
 
-    deleteTodo(todo) { return serverDeleteTodo(this.apiendpoint, todo); }
+    deleteTodo(todo) {
+        serverDeleteTodo(this.apiendpoint, todo);
+        this.emit('deleteTodo', todo);  // passed to the store without awaiting REST response for optimistic delete
+    }
 }

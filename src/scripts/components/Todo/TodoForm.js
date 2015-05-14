@@ -2,14 +2,24 @@
 
 import React from 'react/addons';
 
-let TodoForm = React.createClass({
+export default class TodoForm extends React.Component {
 
-    getInitialState() { return { value: '' }; },
+    static contextTypes = {
+        todoactions: React.PropTypes.object.isRequired
+    };
+
+    constructor() {
+        super();
+        this.state = { value: '' };
+    }
 
     render() {
 
+        const { todoactions } = this.context;
+
         const handleAdd = () => {
-            this.props.onAdd(this.state.value);
+            if(this.state.value.trim() === '') { return; }
+            todoactions.createTodo(this.state.value);
             this.setState({value: ''});
         };
 
@@ -24,6 +34,4 @@ let TodoForm = React.createClass({
             </div>
         );
     }
-});
-
-module.exports = TodoForm;
+}
