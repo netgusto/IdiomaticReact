@@ -23,6 +23,7 @@
     "babel-eslint": "3.1.1",
     "babel-loader": "5.0.0",
     "css-loader": "0.12.1",
+    "file-loader": "0.8.1",
     "eslint": "0.21.0",
     "eslint-loader": "0.11.2",
     "eslint-plugin-react": "^2.3.0",
@@ -30,16 +31,8 @@
     "grunt-contrib-clean": "0.6.0",
     "grunt-contrib-connect": "0.10.1",
     "grunt-contrib-copy": "0.8.0",
-    "grunt-karma": "0.10.1",
     "grunt-open": "0.2.3",
     "grunt-webpack": "1.0.8",
-    "karma": "0.12.31",
-    "karma-chrome-launcher": "0.1.12",
-    "karma-firefox-launcher": "0.1.6",
-    "karma-jasmine": "0.3.5",
-    "karma-phantomjs-launcher": "0.1.4",
-    "karma-script-launcher": "0.1.0",
-    "karma-webpack": "1.5.1",
     "load-grunt-tasks": "3.1.0",
     "node-sass": "3.1.0",
     "react-hot-loader": "1.2.7",
@@ -47,6 +40,7 @@
     "style-loader": "0.12.2",
     "url-loader": "0.5.5",
     "webpack": "1.9.5",
+    "node-libs-browser": ">= 0.4.0 <=0.5.0",
     "webpack-dev-server": "1.8.2"
   }
 }
