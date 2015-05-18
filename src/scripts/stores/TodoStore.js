@@ -15,23 +15,25 @@ export default class TodoStore extends Store {
         * Intentionnaly made private (just use the actions !)
         */
 
-        actions.on('createTodo', todo => {
+        this.listen(actions, 'createTodo', todo => {
             this.todos = this.todos.set(todo.get('id'), todo);
             this.changed();
         });
 
-        actions.on('fetchTodos', todos => {
+        this.listen(actions, 'fetchTodos', todos => {
             for(let todo of todos) {
                 this.todos = this.todos.set(todo.get('id'), todo);
             }
             this.changed();
         });
 
-        actions.on('deleteTodo', todo => {
+        this.listen(actions, 'deleteTodo', todo => {
             this.todos = this.todos.delete(todo.get('id'));
             this.changed();
         });
     }
+
+    // Public API
 
     getTodos() { return this.todos.toArray(); }
 }
