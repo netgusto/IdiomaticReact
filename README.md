@@ -4,7 +4,7 @@
 
 Currently, it uses :
 
-* [React 0.13.3](http://facebook.github.io/react/) with [JSX](https://facebook.github.io/jsx/);
+* [React 0.13.x](http://facebook.github.io/react/) with [JSX](https://facebook.github.io/jsx/);
 * [Geiger](https://github.com/netgusto/geiger), a tiny flux implementation (&lt;50 SLOC) with Dependency Injection features;
 * [React-Router](https://github.com/rackt/react-router) for the routing;
 * [Immutable.js](http://facebook.github.io/immutable-js/) for immutability in the stores;
