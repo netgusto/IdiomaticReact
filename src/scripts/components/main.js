@@ -37,12 +37,13 @@ const Interfaces = (
 
 Router.run(
     Interfaces,
-    RouteHandler => React.render((
-        <Context user={config.user} todostore={todostore} todoactions={todoactions}>
-        {/* Setting depencies in the context */}
-            <RouteHandler />
-            {/* Displaying the interface passed by the router */}
-        </Context>),
+    RouteHandler => React.render(
+        (<Context
+            user={config.user}
+            todostore={todostore}
+            todoactions={todoactions}
+            render={() => <RouteHandler /> } />
+        ),
         document.getElementById('app')
     )
 );

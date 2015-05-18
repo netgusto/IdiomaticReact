@@ -1,9 +1,9 @@
 'use strict';
 
-import { Watchable } from 'geiger';
+import { Store } from 'geiger';
 import Immutable from 'immutable';
 
-export default class TodoStore extends Watchable {
+export default class TodoStore extends Store {
 
     constructor({ actions }) {
 

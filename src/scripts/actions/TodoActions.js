@@ -1,6 +1,6 @@
 'use strict';
 
-import { Watchable } from 'geiger';
+import { Action } from 'geiger';
 import axios from 'axios';
 
 import { TodoRecord } from '../records';
@@ -19,7 +19,7 @@ const serverDeleteTodo = (apiendpoint, todo) => {
     axios.delete(apiendpoint + '/todos/' + todo.get('id'));
 };
 
-export default class TodoActions extends Watchable {
+export default class TodoActions extends Action {
 
     constructor({ apiendpoint }) {
         super();
