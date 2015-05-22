@@ -1,6 +1,8 @@
-# IdiomaticReact
+# Idiomatic React Chat
 
-**Idiomatic React** aims to be the simplest API-centric Flux app one could build using React.
+**Idiomatic React Chat** aims to be the simplest Flux Chat Example app one could build using React.
+
+It complements **Idiomatic React** (on the branch `master` of this repository), and provides an example making use of multiple interdependent stores.
 
 Currently, it uses :
 
@@ -11,9 +13,13 @@ Currently, it uses :
 * [Babel](https://babeljs.io/) for ES6/ES7 transpilation and linting;
 * [Webpack](http://webpack.github.io/) for the tooling.
 
+This demo app is based on Facebook's [Flux Chat Example App](https://github.com/facebook/flux/tree/master/examples/flux-chat).
+
 ## Install & run
 
 ```
+git clone https://github.com/netgusto/IdiomaticReact
+git checkout chat
 npm install
 grunt serve
 ```
@@ -28,7 +34,7 @@ Then navigate to [http://localhost:8000]()
 
 * Routing, with stateful navigation bar
 * ES6/ES7 transpilation to ES5, allowing ES6 constructs and ES7 `await/async` in the code
-* REST API adapter to I/O data, bufferring in stores
+* Multiple, synchronized stores
 * Immutable stores
 
 ## Motive
