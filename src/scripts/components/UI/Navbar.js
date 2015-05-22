@@ -18,11 +18,11 @@ export default class UINavbar extends React.Component {
             <div className="navbar navbar-default navbar-fixed-top" role="navigation">
                 <div className="container">
                     <div className="navbar-header">
-                        <Link to="home" className="navbar-brand"><img src="/assets/netgusto.png" style={{height: '60px', position: 'absolute', top: '5px'}} /> <div style={{marginLeft: '80px', fontSize: '1.3em'}}>Idiomatic React</div></Link>
+                        <Link to="home" className="navbar-brand"><img src="/assets/netgusto.png" style={{height: '60px', position: 'absolute', top: '5px'}} /> <div style={{marginLeft: '80px', fontSize: '1.3em'}}>Idiomatic React Chat</div></Link>
                     </div>
 
                     <ul className="nav navbar-nav">
-                        <li className={cx({active: router.isActive('rest')})}><Link to="rest">Rest Todos</Link></li>
+                        <li className={cx({active: router.isActive('chat')})}><Link to="chat">Le Chat</Link></li>
                     </ul>
 
                     <ul className="nav navbar-nav pull-right">

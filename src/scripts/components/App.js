@@ -7,12 +7,6 @@ import UINavbar from './UI/Navbar';
 
 export default class App extends React.Component {
 
-    static contextTypes = {
-        todoactions: React.PropTypes.object.isRequired
-    };
-
-    componentDidMount() { this.context.todoactions.fetchTodos(); }
-
     render() {
         return (
             <div className='main container'>

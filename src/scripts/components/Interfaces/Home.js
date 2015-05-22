@@ -5,19 +5,21 @@ import UIPageHeader from '../UI/PageHeader';
 
 export default class InterfaceHome extends React.Component {
 
-    static contextTypes = {
-        user: React.PropTypes.object.isRequired
-    };
-
     render() {
-
-        const { user } = this.context;
 
         return (
             <div>
-                <UIPageHeader icon="star" text={user.firstname + ' ' + user.lastname + ', welcome !'} />
-                <p><strong>Idiomatic React</strong> aims to be the simplest API-centric Flux app one could build using React.</p>
+                <UIPageHeader icon="star" text='Welcome !' />
+
+                <p><strong>Idiomatic React Chat</strong> aims to be the simplest Chat example app one could build using React.</p>
+
+                <p>
+                    It complements <strong>Idiomatic React</strong>
+                    , and provides an example making use of multiple interdependent stores.
+                </p>
+
                 <p>Currently, it uses :</p>
+
                 <ul>
                     <li><a href="http://facebook.github.io/react/">React 0.13.x</a> with <a href="https://facebook.github.io/jsx/">JSX</a>;</li>
                     <li><a href="https://github.com/netgusto/geiger">Geiger</a> , a tiny flux implementation (&lt;100 SLOC) with store synchronization and Dependency Injection features;</li>
@@ -26,6 +28,10 @@ export default class InterfaceHome extends React.Component {
                     <li><a href="https://babeljs.io/">Babel</a> for ES6/ES7 transpilation and linting;</li>
                     <li><a href="http://webpack.github.io/">Webpack</a> for the tooling.</li>
                 </ul>
+
+                <p>
+                    This demo app is based on Facebook's <a href="https://github.com/facebook/flux/tree/master/examples/flux-chat">Flux Chat Example App</a>.
+                </p>
             </div>
         );
     }
