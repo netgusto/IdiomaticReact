@@ -14,7 +14,7 @@ export default class ThreadListItem extends React.Component {
         currentThreadID: React.PropTypes.string
     };
 
-    _onClick() { this.context.threadactions.clickThread(this.props.thread.id); }
+    onClick() { this.context.threadactions.clickThread(this.props.thread.id); }
 
     render() {
         const thread = this.props.thread;
@@ -26,7 +26,7 @@ export default class ThreadListItem extends React.Component {
                     'thread-list-item': true,
                     'active': thread.id === this.props.currentThreadID
                 })}
-                onClick={this._onClick.bind(this)}>
+                onClick={this.onClick.bind(this)}>
                 <h5 className="thread-name">{thread.name}</h5>
                 <div className="thread-time">
                     {lastMessage.date.toLocaleTimeString()}
