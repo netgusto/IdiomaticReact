@@ -19,6 +19,7 @@ This demo app is based on Facebook's [Flux Chat Example App](https://github.com/
 
 ```
 git clone https://github.com/netgusto/IdiomaticReact
+cd IdiomaticReact
 git checkout chat
 npm install
 grunt serve
