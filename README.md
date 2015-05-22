@@ -2,6 +2,8 @@
 
 **Idiomatic React** aims to be the simplest API-centric Flux app one could build using React.
 
+It's complemented by **Idiomatic React Chat** (on the branch `chat` of this repository), implementing Facebook's Flux Chat app.
+
 Currently, it uses :
 
 * [React 0.13.x](http://facebook.github.io/react/) with [JSX](https://facebook.github.io/jsx/);
@@ -14,6 +16,8 @@ Currently, it uses :
 ## Install & run
 
 ```
+git clone https://github.com/netgusto/IdiomaticReact
+cd IdiomaticReact
 npm install
 grunt serve
 ```
