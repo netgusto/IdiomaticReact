@@ -6,20 +6,6 @@ import axios from 'axios';
 import { TodoRecord } from '../records';
 import uuid from '../utils/uuid';
 
-const serverFetchTodos = apiendpoint => {
-    return axios.get(apiendpoint + '/todos').then(todos => {
-        return todos.data.slice(0, 7).map(o => new TodoRecord(o));  // passed to the store after REST response (obviously); sliced for the demo
-    });
-};
-
-const serverCreateTodo = (apiendpoint, newTodo) => {
-    axios.post(apiendpoint + '/todos', newTodo);
-};
-
-const serverDeleteTodo = (apiendpoint, todo) => {
-    axios.delete(apiendpoint + '/todos/' + todo.get('id'));
-};
-
 export default class TodoActions extends Action {
 
     constructor({ apiendpoint }) {
@@ -28,19 +14,20 @@ export default class TodoActions extends Action {
     }
 
     fetchTodos() {
-        return serverFetchTodos(this.apiendpoint).then(todos => {
-            this.emit('fetchTodos', todos);
-        });
+        return axios
+            .get(this.apiendpoint + '/todos')
+            .then(todos => todos.data.slice(0, 7).map(o => new TodoRecord(o)))  // passed to the store after REST response (obviously); sliced for the demo
+            .then(todos => this.emit('fetchTodos', todos));
     }
 
     createTodo(title) {
         const todo = new TodoRecord({ id: uuid(), title });
-        serverCreateTodo(this.apiendpoint, todo);
-        this.emit('createTodo', todo);  // passed to the store without awaiting REST response for optimistic add
+        this.emit('createTodo', todo);
+        return axios.post(this.apiendpoint + '/todos', todo);   // passed to the store without awaiting REST response for optimistic add
     }
 
     deleteTodo(todo) {
-        serverDeleteTodo(this.apiendpoint, todo);
         this.emit('deleteTodo', todo);  // passed to the store without awaiting REST response for optimistic delete
+        return axios.delete(this.apiendpoint + '/todos/' + todo.get('id'));
     }
 }
