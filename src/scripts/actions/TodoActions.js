@@ -6,9 +6,10 @@ import axios from 'axios';
 import { TodoRecord } from '../records';
 import uuid from '../utils/uuid';
 
-const serverFetchTodos = async (apiendpoint) => {
-    let todos = await axios.get(apiendpoint + '/todos');
-    return todos.data.slice(0, 7).map(o => new TodoRecord(o));  // passed to the store after REST response (obviously); sliced for the demo
+const serverFetchTodos = apiendpoint => {
+    return axios.get(apiendpoint + '/todos').then(todos => {
+        return todos.data.slice(0, 7).map(o => new TodoRecord(o));  // passed to the store after REST response (obviously); sliced for the demo
+    });
 };
 
 const serverCreateTodo = (apiendpoint, newTodo) => {
@@ -26,9 +27,10 @@ export default class TodoActions extends Action {
         this.apiendpoint = apiendpoint;
     }
 
-    async fetchTodos() {
-        const todos = await serverFetchTodos(this.apiendpoint);
-        this.emit('fetchTodos', todos);
+    fetchTodos() {
+        return serverFetchTodos(this.apiendpoint).then(todos => {
+            this.emit('fetchTodos', todos);
+        });
     }
 
     createTodo(title) {
