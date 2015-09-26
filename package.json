@@ -34,7 +34,7 @@
     "grunt-open": "0.2.3",
     "grunt-webpack": "1.0.11",
     "load-grunt-tasks": "3.2.0",
-    "node-sass": "3.2.0",
+    "node-sass": "3.3.3",
     "react-hot-loader": "1.2.8",
     "sass-loader": "^1.0.3",
     "style-loader": "0.12.3",
