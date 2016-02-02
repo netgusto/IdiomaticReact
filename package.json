@@ -9,6 +9,9 @@
   "dist": "dist",
   "mainInput": "main",
   "mainOutput": "main",
+  "scripts": {
+    "test": "grunt test && grunt build"
+  },
   "dependencies": {
     "axios": "0.5.4",
     "babel-runtime": "5.8.12",
